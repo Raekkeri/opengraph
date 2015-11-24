@@ -2,10 +2,15 @@
 
 import re
 import urllib2
+
+BS3 = 3
+BS4 = 4
 try:
     from bs4 import BeautifulSoup
+    import_beautifulsoup = BS4
 except ImportError:
     from BeautifulSoup import BeautifulSoup
+    import_beautifulsoup = BS3
 
 global import_json
 try:
@@ -60,7 +65,10 @@ class OpenGraph(dict):
             doc = html
         ogs = doc.html.head.findAll(property=re.compile(r'^og'))
         for og in ogs:
-            if og.has_attr(u'content'):
+            has_content = (og.has_attr(u'content')
+                    if import_beautifulsoup == BS4
+                    else og.has_key(u'content'))
+            if has_content:
                 self[og[u'property'][3:]]=og[u'content']
         # Couldn't fetch all attrs from og tags, try scraping body
         if not self.is_valid() and self.scrape:
