@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.5'
+version = '0.5.1'
 
 setup(name='opengraph',
       version=version,
@@ -23,7 +23,6 @@ setup(name='opengraph',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
-          'beautifulsoup4'
       ],
       entry_points="""
       # -*- Entry points: -*-
